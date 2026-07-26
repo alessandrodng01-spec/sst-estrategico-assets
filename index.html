@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+
+  <title>SST Estratégico | Meta Zero</title>
+
+  <meta name="theme-color" content="#071827">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="SST Estratégico">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #06111b;
+      --panel: #0d2234;
+      --line: #31566f;
+      --green: #27c558;
+      --text: #ffffff;
+      --muted: #a8bdcc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .app-shell {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 15% 5%, rgba(39, 197, 88, .14), transparent 32%),
+        var(--bg);
+    }
+
+    #portal {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: var(--bg);
+    }
+
+    #loading {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(39, 197, 88, .15), transparent 32%),
+        linear-gradient(145deg, #06111b, #0b263d);
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+
+    #loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-card {
+      width: min(390px, 100%);
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(13, 34, 52, .94);
+      text-align: center;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .38);
+    }
+
+    .logo {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 18px;
+      border-radius: 23px;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .32);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--text);
+      font-size: 24px;
+    }
+
+    p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .spinner {
+      width: 38px;
+      height: 38px;
+      margin: 22px auto 0;
+      border: 4px solid rgba(255,255,255,.18);
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    .fallback {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .fallback.visible {
+      display: block;
+    }
+
+    .fallback a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #27c558, #16943f);
+      color: white;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <section id="loading" aria-live="polite">
+      <div class="loading-card">
+        <img class="logo" src="./icon-192.png" alt="SST Estratégico">
+        <h1>SST Estratégico | Meta Zero</h1>
+        <p>Abrindo o aplicativo do funcionário...</p>
+        <div class="spinner" aria-hidden="true"></div>
+
+        <div id="fallback" class="fallback">
+          <p>O aplicativo está demorando para carregar.</p>
+          <a href="https://script.google.com/macros/s/AKfycbwdbU_eOI0osLSk1Ua0cAW9727cvwmknUXUsONRtLB0XIpC5e7pOFUdLx_R0pVT6G-k/exec?app=funcionario" target="_top" rel="noopener">
+            Abrir diretamente
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <iframe
+      id="portal"
+      title="SST Estratégico | Meta Zero"
+      src="https://script.google.com/macros/s/AKfycbwdbU_eOI0osLSk1Ua0cAW9727cvwmknUXUsONRtLB0XIpC5e7pOFUdLx_R0pVT6G-k/exec?app=funcionario"
+      allow="clipboard-read; clipboard-write"
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+  </main>
+
+  <script>
+    const iframe = document.getElementById('portal');
+    const loading = document.getElementById('loading');
+    const fallback = document.getElementById('fallback');
+
+    iframe.addEventListener('load', () => {
+      window.setTimeout(() => loading.classList.add('hidden'), 350);
+    });
+
+    window.setTimeout(() => {
+      if (!loading.classList.contains('hidden')) {
+        fallback.classList.add('visible');
+      }
+    }, 9000);
+  </script>
+</body>
+</html>
